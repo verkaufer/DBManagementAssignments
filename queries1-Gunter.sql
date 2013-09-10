@@ -1,7 +1,7 @@
 /**
 * SQL Queries 1 - Database Management
 * Due: 16 September 2013
-* Submitted by: David Gunter
+* Submitted by: David Gunter via Git
 */
 
 /* 1. List all data for all customers */
