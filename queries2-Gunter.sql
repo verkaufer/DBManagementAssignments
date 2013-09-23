@@ -1,7 +1,7 @@
 /*
 * Homework Assignment #2
 * Database Management Systems
-* David Gunter 
+* David Gunter - submitted via Git
 */ 
 
 -- 1. Get the cities of agents booking an order for customer c002.
@@ -95,3 +95,21 @@
 	      WHERE city = 'Dallas' 
 	      OR city = 'Kyoto'
 	    );
+
+        
+		-- GOTTA HUSTLE
+        --                       .(_)_
+        --                      /,    \                 .
+        --                     <_)    |\
+        --                    __/._ .-|/_         `     .     '
+        --                     (   .   )             .  |  .
+        --                     : .d8b-'/       _      \.-./      _
+        -- a:f.-.-..-.--.--._  ( ( Y `n   ____________'...`__________
+        -- '/    '-.  . -      : : # .v       .    ----==-----    .
+        --    .'-.   ' .-,_.-' ( )_#_/  `-._.   -     ---     --
+        --           ._.-'      O/ #        `/:_      ---  -
+        --   '.,   .-'          "' #          ` `=. .  -
+        --     _.-'                #               `-:
+        --                         .
+        --                         `:
+        --                          '
