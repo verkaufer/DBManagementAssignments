@@ -86,3 +86,65 @@
 -------
 -- 9 --
 -------
+
+select c.name, c.city
+from customers c
+join products p on c.city = p.city 
+group by c.name, c.city, p.city
+having count(p.pid) <= (
+	SELECT count(city) AS "Occurences"
+	FROM products
+	GROUP BY city
+	ORDER BY "Occurences" ASC
+	LIMIT 1);
+
+--------
+-- 10 --
+--------
+
+CREATE VIEW productsFromCities AS 
+(SELECT count(city) AS "Occurences"
+FROM products
+GROUP BY city
+ORDER BY "Occurences" DESC);
+
+SELECT c.name, c.city
+FROM customers c
+JOIN products p ON c.city = p.city
+GROUP BY c.name, c.city, p.city
+HAVING count(p.pid) = (SELECT max("Occurences") 
+					   FROM productsFromCities);
+
+--------
+-- 11 --
+--------
+
+CREATE VIEW productsFromCities AS 
+(SELECT count(city) AS "Occurences"
+FROM products
+GROUP BY city
+ORDER BY "Occurences" DESC);
+
+SELECT c.name, c.city
+FROM customers c
+JOIN products p ON c.city = p.city
+GROUP BY c.name, c.city, p.city
+HAVING count(p.pid) <= (SELECT max("Occurences") FROM productsFromCities);
+
+--------
+-- 12 --
+--------
+
+SELECT name
+FROM products
+WHERE priceUSD > (SELECT avg(priceUSD) 
+		  FROM products)
+
+--------
+-- 13 -- WORK IN PROCESS
+--------
+
+select o.cid, o.pid, o.dollars
+from orders o
+join customers on o.cid = customers.cid
+order by pid ASC, dollars DESC
