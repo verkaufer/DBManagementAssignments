@@ -87,11 +87,11 @@
 -- 9 --
 -------
 
-select c.name, c.city
-from customers c
-join products p on c.city = p.city 
-group by c.name, c.city, p.city
-having count(p.pid) <= (
+SELECT c.name, c.city
+FROM customers c
+JOIN products p ON c.city = p.city 
+GROUP BY c.name, c.city, p.city
+HAVING count(p.pid) <= (
 	SELECT count(city) AS "Occurences"
 	FROM products
 	GROUP BY city
@@ -138,13 +138,35 @@ HAVING count(p.pid) <= (SELECT max("Occurences") FROM productsFromCities);
 SELECT name
 FROM products
 WHERE priceUSD > (SELECT avg(priceUSD) 
-		  FROM products)
+		  		  FROM products)
 
 --------
--- 13 -- WORK IN PROCESS
+-- 13 --
 --------
 
-select o.cid, o.pid, o.dollars
-from orders o
-join customers on o.cid = customers.cid
-order by pid ASC, dollars DESC
+SELECT c.name, o.pid, o.dollars 
+FROM orders o
+JOIN customers c ON c.cid = o.cid
+ORDER BY pid ASC, dollars DESC
+
+
+--------
+-- 14 --
+--------
+
+SELECT c.name, COALESCE(SUM(o.qty),0)
+FROM orders o
+RIGHT OUTER JOIN customers c ON c.cid = o.cid
+GROUP BY c.cid
+ORDER BY c.name ASC
+
+--------
+-- 15 -- this is a start
+--------
+
+select distinct(c.name)
+from customers c
+join orders o on o.cid = c.cid
+where o.aid in ( select aid
+		from agents a
+		where city = 'New York');
