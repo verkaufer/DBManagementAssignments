@@ -147,7 +147,8 @@ WHERE priceUSD > (SELECT avg(priceUSD)
 SELECT c.name, o.pid, o.dollars 
 FROM orders o
 JOIN customers c ON c.cid = o.cid
-ORDER BY pid ASC, dollars DESC
+ORDER BY pid ASC, 
+         dollars DESC;
 
 
 --------
@@ -158,15 +159,39 @@ SELECT c.name, COALESCE(SUM(o.qty),0)
 FROM orders o
 RIGHT OUTER JOIN customers c ON c.cid = o.cid
 GROUP BY c.cid
-ORDER BY c.name ASC
+ORDER BY c.name ASC;
 
 --------
 -- 15 -- this is a start
 --------
 
-select distinct(c.name)
-from customers c
-join orders o on o.cid = c.cid
-where o.aid in ( select aid
-		from agents a
-		where city = 'New York');
+SELECT c.name AS "Customer Name", 
+       p.name AS "Product Name",
+       a.name AS "Agent Name" 
+FROM customers c
+JOIN orders o ON c.cid = o.cid
+JOIN products p ON o.pid = p.pid
+JOIN agents a ON o.aid = a.aid
+WHERE o.aid IN (
+	SELECT aid
+	FROM agents
+	WHERE city = 'New York')
+ORDER BY c.name ASC;
+
+
+--------
+-- 16 --
+--------
+
+SELECT round((p.priceUSD * o.qty) * (1 - (c.discount / 100)),2) AS "Calculated Value", 
+       o.dollars AS "Orders Table Value"
+FROM products p
+JOIN orders o ON p.pid = o.pid
+JOIN customers c ON o.cid = c.cid;
+
+
+--------
+-- 17 --
+--------
+
+--no way to display this as a query
